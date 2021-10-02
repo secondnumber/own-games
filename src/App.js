@@ -1,4 +1,6 @@
 import React from 'react';
+import TagManager from 'react-gtm-module';
+import amplitude from 'amplitude-js';
 import './App.scss';
 import { Route, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -20,55 +22,69 @@ import StatisticPageContainer from './components/Pages/StatisticPage/StatisticPa
 
 library.add(fab);
 
-const App = (props) => (
-  <div>
-    <Switch>
-      <Route exact path="/">
-        <MainPage />
-      </Route>
-      <Route exact path="/pages/about">
-        <AboutPageContainer />
-      </Route>
-      <Route exact path="/pages/faq">
-        <FaqPageContainer />
-      </Route>
-      <Route exact path="/pages/team">
-        <TeamPageContainer />
-      </Route>
-      <Route exact path="/pages/price">
-        <PriceListPageContainer />
-      </Route>
-      <Route exact path="/pages/testimonials">
-        <TestimonialsPageContainer />
-      </Route>
-      <Route exact path="/pages/statistic">
-        <StatisticPageContainer />
-      </Route>
-      <Route exact path="/gallery">
-        <GalleryPageContainer />
-      </Route>
-      <Route exact path="/games">
-        <GamesPageContainer />
-      </Route>
-      <Route exact path="/gallery/:imageId?">
-        <SingleImagePageContainer />
-      </Route>
-      <Route exact path="/contacts">
-        <ContactsPageContainer />
-      </Route>
-      <Route exact path="/blog">
-        <BlogPageContainer />
-      </Route>
-      <Route exact path="/blog/:postId?">
-        <SinglePostPageContainer />
-      </Route>
-      <Route exact path="/pages/404">
-        <NotFoundPage />
-      </Route>
-      <Route exact path="*">
-        <NotFoundPage />
-      </Route>
-    </Switch>
-  </div>
-);
+//eslint-enable @typescript-eslint/no-explicit-any
+
+const tagManagerArgs = {
+  gtmId: 'GTM-5CDPBQS',
+};
+
+if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'development') {
+  TagManager.initialize(tagManagerArgs);
+}
+
+amplitude.getInstance().logEvent('EVENT_NAME_HERE');
+
+const App = (props) => {
+  return (
+    <div>
+      <Switch>
+        <Route exact path="/">
+          <MainPage />
+        </Route>
+        <Route exact path="/pages/about">
+          <AboutPageContainer />
+        </Route>
+        <Route exact path="/pages/faq">
+          <FaqPageContainer />
+        </Route>
+        <Route exact path="/pages/team">
+          <TeamPageContainer />
+        </Route>
+        <Route exact path="/pages/price">
+          <PriceListPageContainer />
+        </Route>
+        <Route exact path="/pages/testimonials">
+          <TestimonialsPageContainer />
+        </Route>
+        <Route exact path="/pages/statistic">
+          <StatisticPageContainer />
+        </Route>
+        <Route exact path="/gallery">
+          <GalleryPageContainer />
+        </Route>
+        <Route exact path="/games">
+          <GamesPageContainer />
+        </Route>
+        <Route exact path="/gallery/:imageId?">
+          <SingleImagePageContainer />
+        </Route>
+        <Route exact path="/contacts">
+          <ContactsPageContainer />
+        </Route>
+        <Route exact path="/blog">
+          <BlogPageContainer />
+        </Route>
+        <Route exact path="/blog/:postId?">
+          <SinglePostPageContainer />
+        </Route>
+        <Route exact path="/pages/404">
+          <NotFoundPage />
+        </Route>
+        <Route exact path="*">
+          <NotFoundPage />
+        </Route>
+      </Switch>
+    </div>
+  );
+};
 export default App;

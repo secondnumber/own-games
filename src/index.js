@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import amplitude from 'amplitude-js';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+
+amplitude.getInstance().logEvent('EVENT_NAME_HERE');
 
 ReactDOM.render(
   <React.StrictMode>
