@@ -7,11 +7,18 @@ import Social from '../../common/SocialList/Social';
 import Contact from './Contact/Contact';
 import FormContact from '../../common/FormContact/FormContact';
 import MapContainer from '../../common/Map/MapContainer';
+import amplitude from 'amplitude-js';
 
 const ContactsPage = (props) => {
   const submit = (values) => {
     console.log(values);
   };
+
+  const eventProperties = {
+    cont: 'test',
+  };
+
+  amplitude.getInstance().logEvent('VIEW_CONTACTS', eventProperties);
 
   let socialList = props.social.socialList.map((item) => (
     <Social key={item.id} icon={item.icon} link={item.link} />
