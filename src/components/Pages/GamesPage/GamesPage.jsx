@@ -6,7 +6,11 @@ import FooterContainer from '../../common/Footer/FooterContainer';
 import Game from './Game/Game';
 import amplitude from 'amplitude-js';
 
-amplitude.getInstance().logEvent('VIEW_GAMES_PAGE');
+const eventProperties = {
+  'hover time': '100ms',
+};
+
+amplitude.getInstance().logEvent('VIEW_GAMES', eventProperties);
 
 const GamesPage = (props) => {
   let gamesList = props.games.gamesList.map((el) => (
