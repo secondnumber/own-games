@@ -7,6 +7,9 @@ import FooterContainer from '../../common/Footer/FooterContainer';
 import About from './About/About';
 import Achievements from './Achievements/Achievements';
 import classes from './AboutPage.module.scss';
+import amplitude from 'amplitude-js';
+
+amplitude.getInstance().logEvent('VIEW_ABOUT_PAGE');
 
 const AboutPage = (props) => {
   let aboutItems = props.aboutPage.aboutItems.map((element) => (

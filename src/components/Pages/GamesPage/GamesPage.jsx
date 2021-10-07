@@ -4,6 +4,9 @@ import HeaderContainer from '../../common/Header/HeaderContainer';
 import BreadcrumbsContainer from '../../common/Breadcrumbs/BreadcrumbsContainer';
 import FooterContainer from '../../common/Footer/FooterContainer';
 import Game from './Game/Game';
+import amplitude from 'amplitude-js';
+
+amplitude.getInstance().logEvent('VIEW_GAMES_PAGE');
 
 const GamesPage = (props) => {
   let gamesList = props.games.gamesList.map((el) => (
