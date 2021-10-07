@@ -33,7 +33,9 @@ if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'development') {
 }
 
 const userId = '011101';
-amplitude.getInstance().init('11421c2f458d0505c29f2ccb6080d92c', userId);
+amplitude
+  .getInstance()
+  .init('11421c2f458d0505c29f2ccb6080d92c', userId && userId);
 
 const App = (props) => {
   return (
