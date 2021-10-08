@@ -6,7 +6,7 @@ Use npm package manager to install the project
 Running the app in developer mode:  
 `npm start`  
 ## Deploy:
-https://own-games.netlify.app/
+https://own-games.netlify.app/?utm_medium=cpc&utm_source=github&utm_campaign=mycampaign
 ### Technologies used:
 React, redux, SCSS, google-maps-react, formik
 
