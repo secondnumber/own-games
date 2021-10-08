@@ -24,6 +24,8 @@ library.add(fab);
 
 //eslint-enable @typescript-eslint/no-explicit-any
 
+console.log(document.referrer);
+
 const tagManagerArgs = {
   gtmId: 'GTM-5CDPBQS',
 };
