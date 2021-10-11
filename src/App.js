@@ -48,7 +48,7 @@ if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'development') {
   TagManager.initialize(tagManagerArgs);
 }
 
-const userId = '011101';
+const userId = '020022';
 amplitude
   .getInstance()
   .init('11421c2f458d0505c29f2ccb6080d92c', userId && userId);
@@ -62,7 +62,7 @@ const App = (props) => {
     } else setIsFirstTime(true);
     Cookies.set('amp_data', 'visited');
     const userProperties = {
-      city: 'San Francisco',
+      city: 'Moscow',
       firstTime: isFirstTime,
       firstVisitDay: moment(new Date()).dayOfYear(),
       firstVisitWeek: moment(new Date()).week(),
