@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from 'js-cookie';
 import HeaderContainer from '../../common/Header/HeaderContainer';
 import SliderContainer from './Slider/SliderContainer';
 import GamesContainer from './Games/GamesContainer';
@@ -17,8 +18,12 @@ import amplitude from 'amplitude-js';
 amplitude.getInstance().logEvent('VIEW_MAIN_PAGE');
 
 const MainPage = (props) => {
+  const handleSetVisit = () => {
+    Cookies.set('amp_data', 'firstTime');
+  };
   return (
     <div className={classes.wrapper}>
+      <button onClick={handleSetVisit}>Set visit</button>
       <ScrollButtonContainer />
       <HeaderContainer />
       <SliderContainer />

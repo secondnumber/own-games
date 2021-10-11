@@ -3,7 +3,6 @@ import classes from './Price.module.scss';
 import Button from '../../Button/Button';
 
 const Price = (props) => {
-  debugger;
   return (
     <div className={classes.wrapper}>
       <h1 className={classes.header}>{props.name}</h1>

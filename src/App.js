@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TagManager from 'react-gtm-module';
 import amplitude from 'amplitude-js';
+import Cookies from 'js-cookie';
+import moment from 'moment';
 import './App.scss';
 import { Route, Switch } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -24,7 +26,19 @@ library.add(fab);
 
 //eslint-enable @typescript-eslint/no-explicit-any
 
-console.log(document.referrer);
+console.log(Cookies.get('amp_data'));
+
+console.log(moment(new Date()).dayOfYear());
+console.log(moment(new Date()).week());
+console.log(Number(moment(new Date()).month()) + 1);
+console.log(window.location.href);
+const url =
+  'https://own-games.netlify.app/?utm_medium=cpc&utm_source=github&utm_campaign=mycampaign';
+const utmData = [...url.matchAll(/utm_([^=]+)=([^&]*)/g)].reduce(
+  (acc, [, k, v]) => ((acc[k] = v), acc),
+  {}
+);
+console.log(utmData);
 
 const tagManagerArgs = {
   gtmId: 'GTM-5CDPBQS',
@@ -40,6 +54,33 @@ amplitude
   .init('11421c2f458d0505c29f2ccb6080d92c', userId && userId);
 
 const App = (props) => {
+  const [isFirstTime, setIsFirstTime] = useState(null);
+
+  useEffect(() => {
+    if (Cookies.get('amp_data') === 'visited') {
+      setIsFirstTime(false);
+    } else setIsFirstTime(true);
+    Cookies.set('amp_data', 'visited');
+    const userProperties = {
+      city: 'San Francisco',
+      firstTime: isFirstTime,
+      firstVisitDay: moment(new Date()).dayOfYear(),
+      firstVisitWeek: moment(new Date()).week(),
+      firstVisitMonth: Number(moment(new Date()).month()) + 1,
+    };
+    amplitude.getInstance().setUserProperties(userProperties);
+  }, []);
+
+  const eventProperties = {
+    firstTime: isFirstTime,
+  };
+
+  console.log(isFirstTime);
+
+  if (isFirstTime !== null) {
+    amplitude.getInstance().logEvent('VIEW_MAIN_PAGE', eventProperties);
+  }
+
   return (
     <div>
       <Switch>
