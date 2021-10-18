@@ -21,6 +21,7 @@ import FaqPageContainer from './components/Pages/FaqPage/FaqPageContainer';
 import BlogPageContainer from './components/Pages/BlogPage/BlogPageContainer';
 import SinglePostPageContainer from './components/Pages/BlogPage/SinglePostPage/SinglePostPageGontainer';
 import StatisticPageContainer from './components/Pages/StatisticPage/StatisticPageContainer';
+import { initAmplitude } from './utils/amp/amplitude';
 
 library.add(fab);
 
@@ -31,9 +32,10 @@ console.log(Cookies.get('amp_data'));
 console.log(moment(new Date()).dayOfYear());
 console.log(moment(new Date()).week());
 console.log(Number(moment(new Date()).month()) + 1);
-console.log(window.location.href);
-const url =
-  'https://own-games.netlify.app/?utm_medium=cpc&utm_source=github&utm_campaign=mycampaign';
+
+const url = window.location.href;
+console.log(url);
+//const url = 'https://own-games.netlify.app';
 const utmData = [...url.matchAll(/utm_([^=]+)=([^&]*)/g)].reduce(
   (acc, [, k, v]) => ((acc[k] = v), acc),
   {}
@@ -48,19 +50,26 @@ if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'development') {
   TagManager.initialize(tagManagerArgs);
 }
 
-const userId = '020022';
-amplitude
-  .getInstance()
-  .init('11421c2f458d0505c29f2ccb6080d92c', userId && userId);
+initAmplitude();
+
+console.log(document.cookie);
 
 const App = (props) => {
   const [isFirstTime, setIsFirstTime] = useState(null);
 
+  const setCookieData = (item, data) => {
+    if (!Cookies.get(`amp${item}`) && data) {
+      Cookies.set(`amp${item}`, data, { expires: 1825, path: '/' });
+    }
+  };
+
   useEffect(() => {
-    if (Cookies.get('amp_data') === 'visited') {
-      setIsFirstTime(false);
-    } else setIsFirstTime(true);
-    Cookies.set('amp_data', 'visited');
+    setCookieData('UtmSource', utmData.source);
+    setCookieData('UtmMedium', utmData.medium);
+    setCookieData('UtmCampaign', utmData.campaign);
+    setCookieData('FirstVisitDay', moment(new Date()).dayOfYear());
+    setCookieData('FirstVisitWeek', moment(new Date()).week());
+    setCookieData('FirstVisitMonth', Number(moment(new Date()).month()) + 1);
     const userProperties = {
       city: 'Moscow',
       firstTime: isFirstTime,
@@ -74,8 +83,6 @@ const App = (props) => {
   const eventProperties = {
     firstTime: isFirstTime,
   };
-
-  console.log(isFirstTime);
 
   if (isFirstTime !== null) {
     amplitude.getInstance().logEvent('VIEW_MAIN_PAGE', eventProperties);
