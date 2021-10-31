@@ -27,11 +27,7 @@ library.add(fab);
 
 //eslint-enable @typescript-eslint/no-explicit-any
 
-console.log(Cookies.get('amp_data'));
-
-console.log(moment(new Date()).dayOfYear());
-console.log(moment(new Date()).week());
-console.log(Number(moment(new Date()).month()) + 1);
+console.log(Cookies.get('ampUtmSource'));
 
 const url = window.location.href;
 console.log(url);
@@ -40,7 +36,6 @@ const utmData = [...url.matchAll(/utm_([^=]+)=([^&]*)/g)].reduce(
   (acc, [, k, v]) => ((acc[k] = v), acc),
   {}
 );
-console.log(utmData);
 
 const tagManagerArgs = {
   gtmId: 'GTM-5CDPBQS',
@@ -51,8 +46,6 @@ if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'development') {
 }
 
 initAmplitude();
-
-console.log(document.cookie);
 
 const App = (props) => {
   const [isFirstTime, setIsFirstTime] = useState(null);
@@ -82,6 +75,7 @@ const App = (props) => {
 
   const eventProperties = {
     firstTime: isFirstTime,
+    utmSource: Cookies.get('ampUtmSource'),
   };
 
   if (isFirstTime !== null) {
