@@ -77,9 +77,7 @@ const App = (props) => {
 
   console.log(eventProperties);
 
-  if (isFirstTime !== null) {
-    amplitude.getInstance().logEvent('VIEW_MAIN_PAGE', eventProperties);
-  }
+  amplitude.getInstance().logEvent('VIEW_MAIN_PAGE', eventProperties);
 
   return (
     <div>
