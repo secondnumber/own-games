@@ -27,10 +27,7 @@ library.add(fab);
 
 //eslint-enable @typescript-eslint/no-explicit-any
 
-console.log(Cookies.get('ampUtmSource'));
-
 const url = window.location.href;
-console.log(url);
 //const url = 'https://own-games.netlify.app';
 const utmData = [...url.matchAll(/utm_([^=]+)=([^&]*)/g)].reduce(
   (acc, [, k, v]) => ((acc[k] = v), acc),
@@ -77,6 +74,8 @@ const App = (props) => {
     firstTime: isFirstTime,
     utmSource: Cookies.get('ampUtmSource'),
   };
+
+  console.log(eventProperties);
 
   if (isFirstTime !== null) {
     amplitude.getInstance().logEvent('VIEW_MAIN_PAGE', eventProperties);
