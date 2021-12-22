@@ -34,12 +34,30 @@ const utmData = [...url.matchAll(/utm_([^=]+)=([^&]*)/g)].reduce(
   {}
 );
 
+const urlTest =
+  'https://own-games.netlify.app/?utm_medium=cpc&utm_source=github&utm_campaign=mycampaign';
+//const utmData = [...url.matchAll(/utm_([^=]+)=([^&]*)/g)].reduce((acc, [, k, v]) => ((acc[k] = v), acc), {});
+const utmDataTest = urlTest.match(/utm_([^=]+)=([^&]*)/g);
+
+const obj = utmDataTest.reduce(function (prev, curr, i, arr) {
+  let p = curr.split('=');
+  prev[decodeURIComponent(p[0])] = decodeURIComponent(p[1]);
+  return prev;
+}, {});
+
+console.log(obj.utm_source);
+
 const tagManagerArgs = {
   gtmId: 'GTM-5CDPBQS',
 };
 
+const tagManagerGtm = {
+  gtmId: 'GTM-T74GX4C',
+};
+
 if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'development') {
   TagManager.initialize(tagManagerArgs);
+  TagManager.initialize(tagManagerGtm);
 }
 
 initAmplitude();
@@ -74,8 +92,6 @@ const App = (props) => {
     firstTime: isFirstTime,
     utmSource: Cookies.get('ampUtmSource'),
   };
-
-  console.log(eventProperties);
 
   amplitude.getInstance().logEvent('VIEW_MAIN_PAGE', eventProperties);
 
