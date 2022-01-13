@@ -7,6 +7,13 @@ import * as serviceWorker from './serviceWorker';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import buildSitemap from 'react-build-sitemap';
+
+buildSitemap(
+  './App.js',
+  './build/path/for/sitemap',
+  'https://own-games.netlify.app/'
+);
 
 ReactDOM.render(
   <React.StrictMode>
